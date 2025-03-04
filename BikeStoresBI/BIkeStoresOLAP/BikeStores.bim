@@ -1,0 +1,674 @@
+{
+  "name": "SemanticModel",
+  "compatibilityLevel": 1600,
+  "model": {
+    "culture": "en-US",
+    "dataSources": [
+      {
+        "type": "structured",
+        "name": "SQL/localhost;BikeStoresDW",
+        "connectionDetails": {
+          "protocol": "tds",
+          "address": {
+            "server": "localhost",
+            "database": "BikeStoresDW"
+          },
+          "authentication": null,
+          "query": null
+        },
+        "credential": {
+          "AuthenticationKind": "UsernamePassword",
+          "Username": "sa",
+          "EncryptConnection": false
+        }
+      }
+    ],
+    "tables": [
+      {
+        "name": "Customer",
+        "columns": [
+          {
+            "name": "CustomerSK",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "CustomerSK"
+          },
+          {
+            "name": "CustomerID",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "CustomerID"
+          },
+          {
+            "name": "FirstName",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "FirstName"
+          },
+          {
+            "name": "LastName",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "LastName"
+          },
+          {
+            "name": "Phone",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "Phone"
+          },
+          {
+            "name": "Email",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "Email"
+          },
+          {
+            "name": "Street",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "Street"
+          },
+          {
+            "name": "City",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "City"
+          },
+          {
+            "name": "State",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "State"
+          },
+          {
+            "name": "ZipCode",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "ZipCode"
+          },
+          {
+            "type": "calculated",
+            "name": "CustomerName",
+            "dataType": "string",
+            "isDataTypeInferred": true,
+            "expression": " CONCATENATE(CONCATENATE(Customer[FirstName],\" \"),Customer[LastName])"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/localhost;BikeStoresDW\",",
+                "    dbo_DimCustomer = Source{[Schema=\"dbo\",Item=\"DimCustomer\"]}[Data]",
+                "in",
+                "    dbo_DimCustomer"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Date",
+        "columns": [
+          {
+            "name": "DateKey",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "DateKey"
+          },
+          {
+            "name": "FullDate",
+            "dataType": "dateTime",
+            "isHidden": true,
+            "sourceColumn": "FullDate"
+          },
+          {
+            "name": "DayNumberOfWeek",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "DayNumberOfWeek"
+          },
+          {
+            "name": "DayNameOfWeek",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "DayNameOfWeek"
+          },
+          {
+            "name": "DayNumberOfMonth",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "DayNumberOfMonth"
+          },
+          {
+            "name": "DayNumberOfYear",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "DayNumberOfYear"
+          },
+          {
+            "name": "WeekNumberOfYear",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "WeekNumberOfYear"
+          },
+          {
+            "name": "MonthName",
+            "dataType": "string",
+            "sourceColumn": "MonthName",
+            "sortByColumn": "MonthNumberOfYear"
+          },
+          {
+            "name": "MonthNumberOfYear",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "MonthNumberOfYear"
+          },
+          {
+            "name": "CalendarQuarter",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "CalendarQuarter"
+          },
+          {
+            "name": "CalendarYear",
+            "dataType": "int64",
+            "sourceColumn": "CalendarYear"
+          },
+          {
+            "name": "CalendarSemester",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "CalendarSemester"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/localhost;BikeStoresDW\",",
+                "    dbo_DimDate = Source{[Schema=\"dbo\",Item=\"DimDate\"]}[Data]",
+                "in",
+                "    dbo_DimDate"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Product",
+        "columns": [
+          {
+            "name": "ProductSK",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "ProductSK"
+          },
+          {
+            "name": "ProductID",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "ProductID"
+          },
+          {
+            "name": "ProductName",
+            "dataType": "string",
+            "sourceColumn": "ProductName"
+          },
+          {
+            "name": "BrandName",
+            "dataType": "string",
+            "sourceColumn": "BrandName"
+          },
+          {
+            "name": "CategoryName",
+            "dataType": "string",
+            "sourceColumn": "CategoryName"
+          },
+          {
+            "name": "ModelYear",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "ModelYear"
+          },
+          {
+            "name": "ListPrice",
+            "dataType": "double",
+            "isHidden": true,
+            "sourceColumn": "ListPrice"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/localhost;BikeStoresDW\",",
+                "    dbo_DimProduct = Source{[Schema=\"dbo\",Item=\"DimProduct\"]}[Data]",
+                "in",
+                "    dbo_DimProduct"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Staff",
+        "columns": [
+          {
+            "name": "StaffSK",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "StaffSK"
+          },
+          {
+            "name": "StaffID",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "StaffID"
+          },
+          {
+            "name": "FirstName",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "FirstName"
+          },
+          {
+            "name": "LastName",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "LastName"
+          },
+          {
+            "name": "Email",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "Email"
+          },
+          {
+            "name": "Phone",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "Phone"
+          },
+          {
+            "name": "Active",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "Active"
+          },
+          {
+            "name": "ManagerSK",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "ManagerSK"
+          },
+          {
+            "type": "calculated",
+            "name": "EmployeeName",
+            "dataType": "string",
+            "isDataTypeInferred": true,
+            "expression": "CONCATENATE(CONCATENATE(Staff[FirstName],\" \"),Staff[LastName])"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/localhost;BikeStoresDW\",",
+                "    dbo_DimStaff = Source{[Schema=\"dbo\",Item=\"DimStaff\"]}[Data]",
+                "in",
+                "    dbo_DimStaff"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Store",
+        "columns": [
+          {
+            "name": "StoreSK",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "StoreSK"
+          },
+          {
+            "name": "StoreID",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "StoreID"
+          },
+          {
+            "name": "StoreName",
+            "dataType": "string",
+            "sourceColumn": "StoreName"
+          },
+          {
+            "name": "Phone",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "Phone"
+          },
+          {
+            "name": "Email",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "Email"
+          },
+          {
+            "name": "Street",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "Street"
+          },
+          {
+            "name": "City",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "City"
+          },
+          {
+            "name": "State",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "State"
+          },
+          {
+            "name": "ZipCode",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "ZipCode"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/localhost;BikeStoresDW\",",
+                "    dbo_DimStore = Source{[Schema=\"dbo\",Item=\"DimStore\"]}[Data]",
+                "in",
+                "    dbo_DimStore"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Orders",
+        "columns": [
+          {
+            "name": "OrderID",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "OrderID"
+          },
+          {
+            "name": "ItemID",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "ItemID"
+          },
+          {
+            "name": "OrderDateKey",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "OrderDateKey"
+          },
+          {
+            "name": "RequiredDateKey",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "RequiredDateKey"
+          },
+          {
+            "name": "ShippedDateKey",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "ShippedDateKey"
+          },
+          {
+            "name": "CustomerSK",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "CustomerSK"
+          },
+          {
+            "name": "StaffSK",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "StaffSK"
+          },
+          {
+            "name": "StoreSK",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "StoreSK"
+          },
+          {
+            "name": "ProductSK",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "ProductSK"
+          },
+          {
+            "name": "Quantity",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "Quantity"
+          },
+          {
+            "name": "ListPrice",
+            "dataType": "double",
+            "isHidden": true,
+            "sourceColumn": "ListPrice"
+          },
+          {
+            "name": "Discount",
+            "dataType": "double",
+            "isHidden": true,
+            "sourceColumn": "Discount"
+          },
+          {
+            "name": "OrderStatus",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "OrderStatus"
+          },
+          {
+            "name": "OrderDate",
+            "dataType": "dateTime",
+            "isHidden": true,
+            "sourceColumn": "OrderDate"
+          },
+          {
+            "name": "RequiredDate",
+            "dataType": "dateTime",
+            "isHidden": true,
+            "sourceColumn": "RequiredDate"
+          },
+          {
+            "name": "ShippedDate",
+            "dataType": "dateTime",
+            "isHidden": true,
+            "sourceColumn": "ShippedDate"
+          },
+          {
+            "type": "calculated",
+            "name": "GrossSales",
+            "dataType": "double",
+            "isDataTypeInferred": true,
+            "isHidden": true,
+            "expression": "Orders[Quantity]*Orders[ListPrice]"
+          },
+          {
+            "type": "calculated",
+            "name": "NetSales",
+            "dataType": "double",
+            "isDataTypeInferred": true,
+            "expression": "Orders[GrossSales]-(Orders[GrossSales]*Orders[Discount])"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/localhost;BikeStoresDW\",",
+                "    dbo_FactOrders = Source{[Schema=\"dbo\",Item=\"FactOrders\"]}[Data]",
+                "in",
+                "    dbo_FactOrders"
+              ]
+            }
+          }
+        ],
+        "measures": [
+          {
+            "name": "TotalVentasBruto",
+            "expression": " SUM(Orders[GrossSales])"
+          },
+          {
+            "name": "TotalCantidad",
+            "expression": " SUM(Orders[Quantity])"
+          },
+          {
+            "name": "TotalVentasNetas",
+            "expression": " SUM(Orders[NetSales])"
+          },
+          {
+            "name": "TotalOrdenes",
+            "expression": " DISTINCTCOUNT(Orders[OrderID])"
+          }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "name": "27378ffb-6896-4fd7-b0e0-f2f816c7bd5d",
+        "fromTable": "Orders",
+        "fromColumn": "RequiredDateKey",
+        "toTable": "Date",
+        "toColumn": "DateKey",
+        "isActive": false
+      },
+      {
+        "name": "01e1d601-914a-477c-bd3a-1cb59a0ce47d",
+        "fromTable": "Orders",
+        "fromColumn": "ShippedDateKey",
+        "toTable": "Date",
+        "toColumn": "DateKey",
+        "isActive": false
+      },
+      {
+        "name": "ef65a0c0-4493-4f6a-919a-91793133ccf6",
+        "fromTable": "Orders",
+        "fromColumn": "CustomerSK",
+        "toTable": "Customer",
+        "toColumn": "CustomerSK"
+      },
+      {
+        "name": "23ec5623-3319-4436-9389-cf9d11ebf00c",
+        "fromTable": "Orders",
+        "fromColumn": "OrderDateKey",
+        "toTable": "Date",
+        "toColumn": "DateKey"
+      },
+      {
+        "name": "30ac422d-92d0-48b0-a436-bdf9ebe3b4a8",
+        "fromTable": "Orders",
+        "fromColumn": "ProductSK",
+        "toTable": "Product",
+        "toColumn": "ProductSK"
+      },
+      {
+        "name": "290f5096-f57f-459e-93c5-afb5b389659c",
+        "fromTable": "Orders",
+        "fromColumn": "StaffSK",
+        "toTable": "Staff",
+        "toColumn": "StaffSK"
+      },
+      {
+        "name": "05a869c8-ecb1-4c02-9788-a99500ff9ab8",
+        "fromTable": "Orders",
+        "fromColumn": "StoreSK",
+        "toTable": "Store",
+        "toColumn": "StoreSK"
+      }
+    ],
+    "perspectives": [
+      {
+        "name": "Ventas",
+        "tables": [
+          {
+            "name": "Customer",
+            "columns": [
+              {
+                "name": "CustomerName"
+              }
+            ]
+          },
+          {
+            "name": "Date",
+            "columns": [
+              {
+                "name": "CalendarYear"
+              },
+              {
+                "name": "MonthName"
+              }
+            ]
+          },
+          {
+            "name": "Orders",
+            "measures": [
+              {
+                "name": "TotalCantidad"
+              },
+              {
+                "name": "TotalOrdenes"
+              }
+            ]
+          },
+          {
+            "name": "Store",
+            "columns": [
+              {
+                "name": "StoreName"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "annotations": [
+      {
+        "name": "ClientCompatibilityLevel",
+        "value": "700"
+      }
+    ]
+  },
+  "id": "SemanticModel"
+}
